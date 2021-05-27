@@ -23,15 +23,18 @@ result = pd.merge(df_temperature, df_demand, on="DATETIME")
 #result = result.dropna()
 #result # 195947 ==> There is no NA
 
+DatetimeIndex   = pd.DatetimeIndex(result['DATETIME'], dayfirst=True)
+result['year']  = DatetimeIndex.year
+result['month'] = DatetimeIndex.month_name()
+result['day']   = DatetimeIndex.day
+result['day_name'] = DatetimeIndex.day_name()
+result['time']  = DatetimeIndex.time
 
-result['year'] = pd.DatetimeIndex(result['DATETIME']).year
-result['month'] = pd.DatetimeIndex(result['DATETIME']).month
-result['day'] = pd.DatetimeIndex(result['DATETIME']).day
+#result['hour'] = DatetimeIndex.hour
+#result['minute'] = DatetimeIndex.minute
+#result['dayofweek'] = DatetimeIndex.dayofweek
 
 
-result['hour'] = pd.DatetimeIndex(result['DATETIME']).hour
-result['minute'] = pd.DatetimeIndex(result['DATETIME']).minute
-result['dayofweek'] = pd.DatetimeIndex(result['DATETIME']).dayofweek
 
 result = result.drop('DATETIME', axis = 1)
 print(result.head())
