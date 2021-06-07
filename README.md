@@ -10,9 +10,9 @@ Complete the information below regarding your group.
 
 ### Group members and zIDs
 - Matthew Seery - Group leader
-- Baheerathan Gnanasundram - role
-- Mohammad Ahsan Ullah - role
-- Rahul Lobo - role
+- Baheerathan Gnanasundram - Data Scientist
+- Mohammad Ahsan Ullah - Data Scientist
+- Rahul Lobo - Data Scientist
 
 ### Brief project description
 
