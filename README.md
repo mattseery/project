@@ -9,14 +9,14 @@ Complete the information below regarding your group.
 ## Group and project information
 
 ### Group members and zIDs
-- Matthew Seery - Group leader
+- Matthew Seery - Group Leader
 - Baheerathan Gnanasundram - Data Scientist
 - Mohammad Ahsan Ullah - Data Scientist
 - Rahul Lobo - Data Scientist
 
 ### Brief project description
 
-Describe your project in one paragraph.
+The aim of this project is to forecast electricity demand using previously recorded data. The supplied data consists of electricity demand and temperature recordings between January 2010 and March 2011.
 
 ## Repository structure
 
