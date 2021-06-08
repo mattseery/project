@@ -130,7 +130,11 @@ now more interested stakeholders associated with the generation and
 distribution of this service. Traditionally electricity demand was just
 the concern of governments. However, this has now been extended to
 market bodies and owners and operators of the underlying infrastructure
-required for this service. This study aims to demonstrate how neural
+required for this service. Forecasting accurate energy demand not only
+supports network infrastructure, but also aides investment decisions
+about power generation. It is of thus of interest to a variety of
+stakeholders including power utilities, energy policymakers, and private
+investors just to name a few. This study aims to demonstrate how neural
 network (specifically LSTM neural networks) can be used to accurately
 forecast short-term energy demand. The focus will be on attributes such
 as temperature, month of the year, day of the week and time of the day
@@ -169,35 +173,100 @@ benchmarking.
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
 
-This R Markdown template can be used for the ZZSC9020 course report. You
-can incorporate R \cite{R} chunks and Python chunks that will be run on
-the fly. You can incorporate \LaTeX~commands.
+Towards the end of the 20th century, countries throughout the world
+began moving away from regulated government-controlled energy supply to
+a deregulated sector influenced by market forces \cite{Catalao2007}.
+This means that forecasting for electricity demands is essential
+information required beyond previously regulated governmental
+structures. It is now required by the market bodies working in the
+sector and private industries who invest in the generation and
+distribution of electricity. In turn, this aids in better rules,
+policies, and pricing in the energy sector. However, for this study, the
+focus will primarily be on short-term forecasting as this can greatly
+aid vested parties concerned in maximising profits and cutting costs.
 
 \bigskip
 
-Before submitting the last version of your report, you might want to use
-\url{https://overleaf.com} to collaborate with other members of your
-team directly on the \LaTeX~version of this document (which is a
-byproduct you get when you Knit it from studio).
-
-\bigskip
-
-We suggest you organise your report using the following chapters but,
-depending on your own project, nothing prevents you to have a different
-organisation.
+Temperature plays a significant role in electricity demand. This is
+because heating is utilised more by customers in the cooler months while
+cooling is required for the hottest months of the year. For that reason,
+temperature is an essential attribute that will be investigated in this
+study. However, temperature does not account for other factors such as
+humidity or varying electricity usage patterns associated with specific
+days of the weeks. For example, a temperature of 25 degrees in Spring
+may not lead to as much usage of air conditioning as a humid day in
+Summer with the same temperature. Additionally, the rate of usage of
+electricity will inevitably vary between weekdays, weekends, and public
+holidays due to the varying ratios of usage between business and
+residential customers. Therefore, the month of the year, day of the week
+and time of day will also be examined in this study.
 
 \hypertarget{literature-review}{%
 \chapter{Literature Review}\label{literature-review}}
 
-Here are a few references that can be useful: \cite{Xie2018} and
-\cite{Lafaye2013}. See also
-\url{https://bookdown.org/yihui/rmarkdown-cookbook/}
+There have been various studies undertaken where more traditional
+statistical methods such as multiple linear regression (MLR) have been
+utilised to predict demand \cite{Mohamed2005}. However, in more recent
+times there has been greater focus on the use of neural networks to help
+solve the problem of forecasting demand \cite{Gonzalez2008}. The
+advantage of neural networks is they are very suitable for determining
+non-linear relationships \cite{Gonzalez2008} and have been widely used
+for short-term demand forecasting \cite{Ciulla2019}. They are also very
+flexible and easy to configure when dealing with time-series data
+\cite{Carmona2002}. For neural networks, monthly values have been a
+popular unit of measure and this is particularly true when short-term
+forecasting of demand has been employed \cite{Carmona2002}. However,
+this proposed solution differs because the focus will be on intervals
+shorter than even a day as this is of greater interest to the client.
+Nevertheless, the month of the year will still be considered as an input
+factor for the model for its potential to distinguish factors such as
+humidity that are not fully explained by temperature alone. Another
+distinguishing factor for this study will be the emphasis on the day of
+the week where each record will be categorised as either a weekday,
+weekend, or public holiday.
 
 \bigskip
 
-In order to incorporate your own references in this report, we strongly
-advise you use BibTeX. Your references then needs to be recorded in the
-file \texttt{references.bib}.
+Up until the time of writing, the majority of deep learning models being
+appliied to energy forecasting fall under the subset of three major ways
+\cite{Kumar2013}. These are: A feed forward neural network (FFNN)/Multi
+Layer Perceptron (MLP) through the process of increasing the number of
+hidden layers, some form of recurrence through a recurrent neural
+network (RNN), long-short term memory (LSTM) or gated recurrent unit
+(GRU), or through sequentially combining different types of algorithms
+into an overall structure. In 2020, Xue et al.~contrasted these
+different approaches in order to forecast the heating demand of a
+district system \cite{Xue2020}. Their experiments showed that the LSTM
+models were among the highest-performing models tested for.
+
+\bigskip
+
+When applied to natural gas forecasting, a close relative to electricity
+demand, RNN models have proven to be useful in prediction. Wei et
+al.~(2019) explored the application of LSTM for forecasting natural gas
+consumption of four cities \cite{Xue2020}. In addition, LSTM models used
+for forecasting were compared with other model techniques, including
+multiple linear regression, feed-forward neural networks, and a support
+vector regression in this study. The authors' rigorous testing
+demonstrated that LSTM models achieved a greater accuracy than the other
+data-driven models. It appears that RNN and LSTM models have formed the
+majority of accurate forecasting implementations to date, with other
+machine learning techniques such as SVMs performing as well as, but not
+better than RNN and LSTM based models. An example of this is
+demonstrated by Amarasignhe et al.~(2017), who contrasted the deep
+learning techniques of a Convolutional Neural Network (CNN) and LSTM,
+against a traditional machine learning technique (SVM) in order to
+forecast the energy demand of a building. This forecast was for a time
+period of sixty hours ahead and used 4 years of training data
+\cite{Amarasinghe2016}. Their experiments proved that the deep learning
+based forecasting models obtained less forecasting error when compared
+with standard machine learning-based techniques; in particular, the LSTM
+obtained the smallest error.
+
+\bigskip
+
+Due to the significance of the LSTM accuracy across a variety of these
+studies, it will form the basis of this analysis.
 
 \hypertarget{material-and-methods}{%
 \chapter{Material and Methods}\label{material-and-methods}}
