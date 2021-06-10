@@ -63,13 +63,28 @@ Due to the significance of the LSTM accuracy across a variety of these studies, 
 
 ## Software
 
-R and Python of course are great software for Data Science. Sometimes, you might want to use `bash` utilities such as `awk` or `sed`.
+A variety of software was used in the analysis as well as for collaboration and organisational purposes. GitHub was used as the main tool for collaboration and version control. It is not only extensively used in the industry but also enables the ability to collaborate on code seamlessly from local machines. This was the best choice as it is also used in the course instruction. 
 
-Of course, to ensure reproducibility, you should use something like `Git` and RMarkdown (or a Jupyter Notebook). Do **not** use Word!
+\bigskip
+
+For data analysis purposes, Python, R/Rstudio and Tableau were all used. R was utilised in the initial exploratory data analysis phase in conjunction with Tableau, to visualise the dataset and to observe any obvious trends in the energy data. Tableau was especially useful in visualisation as it allowed the segmentation of days, times and months to be easily discerned in reference to energy demand. The main software used for the electricity demand modelling was Python. It was also used to clean, transform, and replace missing values in the supplied data and for merging separate datasets. including the final LSTM model which was constructed. 
+
+\bigskip
+
+Furthermore, Excel was used to fill in missing values for the temperature dataset and the report for this analysis has been constructed in RMarkdown. 
 
 ## Description of the Data
 
-How are the data stored? What are the sizes of the data files? How many files? etc.
+Three csv files were supplied for this project. The file totaldemand_nsw.csv contains three columns which record a date and timestamp (DATETIME) for the electricity consumed (TOTALDEMAND) for the associated region (REGIONID). The DATETIME columns contains dates between the 1st of January 2010 and midnight on the 18th of March 2021. Also included with each date is a timestamp with values for hours and minutes. There is a timestamp for each hour and thirty-minute interval within each hour for the aforementioned range of dates. All observations have the same value for the REGIONID column which is ‘NSW1’.
+
+\bigskip
+
+The file temperature_nsw.csv also contains three columns. The columns record the location for the temperature observation (LOCATION), the date and time it was recorded (DATETIME) and the actual recorded temperature (TEMPERATURE). The values in the LOCATION column are all the same containing the value ‘Bankstown’ that describes the Bankstown weather station. The values in the DATETIME column are in the same format and range of dates as the temperature_nsw.csv file except some observations are outside the on hour or thirty-minute interval within each hour time periods. The file also contains duplicates and has missing values between the dates of the 1st of January 2010
+and 18th of March 2021.
+
+\bigskip
+
+The third file, forecastdemand_nsw.csv, contains periodic forecasts (FORECASTDEMAND) for a set date and time (DATETIME) and the date and time the forecast was made(LASTCHANGED). The values in the FORECASTDEMAND column align with the same range of dates in the totaldemand_nsw.csv file. The format of the date and time in this column and the DATETIME column is the same as the DATETIME column in the totaldemand_nsw.csv file. The forecastdemand_nsw.csv file also includes a REGIONID column and all with the same values as the totaldemand_nsw.csv file. There is also a column called PREDISPATCHSEQNO which contains a unique id number for each forecast and a PERIODID column which contains a unique ID for forecasts of each unique date and time in the DATETIME column. The data in this file was not used in the neural network models that were tested.
 
 ## Pre-processing Steps
 
@@ -77,7 +92,15 @@ What did you have to do to transform the data so that they become useable?
 
 ## Data Cleaning
 
-How did you deal with missing data? etc. 
+The data in the file totaldemand_nsw.csv required no further cleaning other than the removal of the REGIONID column as it contains redundant data. For the temperature_nsw.csv file, further cleaning was required. There were 14 duplicates found which were removed from the dataset. There were also 579 records that were either missing or had date and timestamps that did not align with those in the totaldemand_nsw.csv file. An attempt was made to reassign the inconsistent timestamps to the nearest 30-minute interval if one for that period did not already exist. However, this only reduced the number of incomplete records down to 564. Instead, it was decided to fill in the missing values by sourcing these temperatures elsewhere. 
+
+\bigskip
+
+For dates between March 2016 and April 2018, hourly temperature recordings were collected for the Bankstown weather station (Station Number 66137) from datasets found at data.gov.au \cite{DATAGOV}. Between May 2010 and May 2011, there were sections of the dataset where more than10 consecutive timestamps were missing. Additionally, they passed through time periods where the maximum or minimum temperature of the day normally occurred. Therefore, either a maximum or minimum temperature for these days was sourced from the Bureau of Meteorology  \cite{BOM} for the Bankstown weather station. These temperatures were then assigned to an estimated hour of the day where the maximum or minimum temperature was likely to have occurred based on when maximum or minimum temperatures occurred on the 3 proceeding and following 3 days. There was also missing timestamps for the 21st of May 2018 between 10:30 and 17:00. However, not even a maximum temperature could be sourced for this day. Therefore, an estimate for the maximum temperature and the time of day it occurred was made using the proceeding and following 3 days as a guide. These sourced temperatures and their associated timestamps were placed in a separate csv file and then merged with the original temperature dataset.
+
+\bigskip
+
+All remaining missing temperatures were filled using the resample and interpolate functions associated with panda dataframes in python. This assigned incremental and evenly spaced values ranging between the values of the previous and next existing temperatures that surrounded the consecutive missing values. Prior to the merging of the two datasets, the LOCATION column was dropped from the total demand dataset as all the values were the same and thus redundant.
 
 ## Assumptions
 
