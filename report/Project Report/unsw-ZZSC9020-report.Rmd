@@ -79,18 +79,13 @@ Three csv files were supplied for this project. The file totaldemand_nsw.csv con
 
 \bigskip
 
-The file temperature_nsw.csv also contains three columns. The columns record the location for the temperature observation (LOCATION), the date and time it was recorded (DATETIME) and the actual recorded temperature (TEMPERATURE). The values in the LOCATION column are all the same containing the value ‘Bankstown’ that describes the Bankstown weather station. The values in the DATETIME column are in the same format and range of dates as the temperature_nsw.csv file except some observations are outside the on hour or thirty-minute interval within each hour time periods. The file also contains duplicates and has missing values between the dates of the 1st of January 2010
-and 18th of March 2021.
+The file temperature_nsw.csv also contains three columns. The columns record the location for the temperature observation (LOCATION), the date and time it was recorded (DATETIME) and the actual recorded temperature (TEMPERATURE). The values in the LOCATION column are all the same containing the value ‘Bankstown’ that describes the Bankstown weather station. The values in the DATETIME column are in the same format and range of dates as the temperature_nsw.csv file except some observations are outside the on hour or thirty-minute interval within each hour time periods. The file also contains duplicates and has missing values between the dates of the 1st of January 2010 and 18th of March 2021.
 
 \bigskip
 
 The third file, forecastdemand_nsw.csv, contains periodic forecasts (FORECASTDEMAND) for a set date and time (DATETIME) and the date and time the forecast was made(LASTCHANGED). The values in the FORECASTDEMAND column align with the same range of dates in the totaldemand_nsw.csv file. The format of the date and time in this column and the DATETIME column is the same as the DATETIME column in the totaldemand_nsw.csv file. The forecastdemand_nsw.csv file also includes a REGIONID column and all with the same values as the totaldemand_nsw.csv file. There is also a column called PREDISPATCHSEQNO which contains a unique id number for each forecast and a PERIODID column which contains a unique ID for forecasts of each unique date and time in the DATETIME column. The data in this file was not used in the neural network models that were tested.
 
-## Pre-processing Steps
-
-What did you have to do to transform the data so that they become useable?
-
-## Data Cleaning
+## Pre-processing Steps and Data Cleaning
 
 The data in the file totaldemand_nsw.csv required no further cleaning other than the removal of the REGIONID column as it contains redundant data. For the temperature_nsw.csv file, further cleaning was required. There were 14 duplicates found which were removed from the dataset. There were also 579 records that were either missing or had date and timestamps that did not align with those in the totaldemand_nsw.csv file. An attempt was made to reassign the inconsistent timestamps to the nearest 30-minute interval if one for that period did not already exist. However, this only reduced the number of incomplete records down to 564. Instead, it was decided to fill in the missing values by sourcing these temperatures elsewhere. 
 
@@ -100,7 +95,20 @@ For dates between March 2016 and April 2018, hourly temperature recordings were 
 
 \bigskip
 
-All remaining missing temperatures were filled using the resample and interpolate functions associated with panda dataframes in python. This assigned incremental and evenly spaced values ranging between the values of the previous and next existing temperatures that surrounded the consecutive missing values. Prior to the merging of the two datasets, the LOCATION column was dropped from the total demand dataset as all the values were the same and thus redundant.
+All remaining missing temperatures were filled using the resample and interpolate functions associated with panda dataframes in python. This assigned incremental and evenly spaced values ranging between the values of the previous and next existing temperatures that surrounded the consecutive missing values. Prior to the merging of the two datasets, the LOCATION column was dropped from the temperature dataset as all the values were the same and thus redundant.
+
+\bigskip
+
+Using python, the temperature dataset was also extended with new features using the DATETIME column as a base. First, separate columns were made for day, day of the week, month, year, hour and minute. Most columns maintained the same values as represented in the original date and timestamp. The only exception was the day of the week which used a numbering scale from 0 (Monday) to 6 (Sunday) to represent the days of the week. The values in the day of week column were then used to generate a Boolean column where 0 signifies a weekday and 1 represents a weekend.
+
+\bigskip
+
+Additional columns were also generated using the values in the HOUR and MONTH columns. The 0 to 23 hours in the HOUR column were broken up into 4 sectors where 0 (Midnight) to 5 represents early morning, 6 to 11 represents late morning, 12 (Midday) to 17 represents afternoon and 18 to 23 represents evening. These grouping were given values from 1 to 4 respectively. Using the MONTH column, a column called SEASON was also created with 1 representing summer, 2 representing autumn, 3 representing winter and 4 representing spring. The temperature dataset was then merged with the total demand dataset. After the transformed dataset was saved as a csv file, one additional column was added in Microsoft Excel called PUBLIC_HOLIDAY with a value of 1 given if the date was a public holiday and 0 otherwise. See Fig. 3.1 for the final processed dataset used in the modelling.
+
+\begin{figure}[H]
+\includegraphics{first_10_records.png}
+\caption{The first 10 records in the transformed dataset used for modelling of the neural networks.}\label{3.1}
+\end{figure}
 
 ## Assumptions
 
@@ -108,50 +116,140 @@ What assumptions are you making on the data?
 
 ## Modelling Methods
 
-# Exploratory Data Analysis
-
-This is where you explore your data using histograms, scatterplots, boxplots, numerical summaries, etc.
-
-## Using R {.fragile}
-
-```{r}
-boxplot(cars, col = c("#5975a4", "#cc8963"))
-```
-
-## Using Python {.fragile}
-
-See https://cran.r-project.org/web/packages/reticulate/vignettes/r_markdown.html for more details.
+Before the dataset described in Chapter 3.3 could be used for modelling, transformations were required for some attributes. Columns with ordinal number values, including the columns DAY, DAY_OF_WEEK, MONTH, HOUR, TIME_OF_DAY and SEASON, were transformed using one-hot encoding. The dataset was then split into a training and test set. A minimum maximum scalar was then fitted for each of continuous values in the training set. This was performed on the TEMPERATURE and TOTALDEMAND columns where values were proportionally reassigned to values between 0 and 1. These fittings were then used to transform the TEMPERATURE and TOTALDEMAND columns in both the training and test set. By Experiment we limit the inputs to month and hour as categorical variables, identification as whether it is a weekday or weekend and the day happened to be a public holiday.
 
 \bigskip
 
-You need to install the R package `reticulate`.
+The LSTM model has been designed to use the attributes of a designated number of immediately previous timestamps to the record that is either being trained or predicted. This number is set by a variable called ‘time_steps’. A function was then created to transform both the X value for the training and test datasets into a three-dimensional matrix. The three dimensions represent the number of records in the dataset, the number of immediately prior records (time_steps) to the current record and the number of features used for these prior records. This therefore means that for each dataset the first number of records, equal to the value of the time_steps variable, cannot be trained or predicted by the model. This is because the number of previous records in the dataset for these records is less than the value of the time_steps variable. It should also be noted that the value of the total demand for the previous records were also included in the matrix of X values. The y value fed to the neural network is the total demand for the current record being either trained or predicted.
 
-```{python eval = !is.null(reticulate:::py_discover_config())}
-print("Python can be used with MATHxxxx!")
-import sys
-print(sys.version)
-```
+\bigskip
+
+The neural network consists of a single layer bidirectional LSTM with 50 neurons which uses ‘relu’ for the activation function. This feeds into a single dense neuron. As part of the python tensorflow library, keras was used to compile the model. Mean square error was used to measure the performance of the model and Adam was used to optimise the model. When fitting the model, 30 epochs were used with a batch size of 32 with 0.1 (10%) of the training dataset set aside for validation. The values of the test dataset were then used to make predictions for the y values of the test dataset with an inverse transform then applied to restore these predictions back to the pre-scaled values. Root Mean Square Error (RMSE) was also used to determine how well the model was performing. 
+
+\bigskip
+
+The test result was recorded along with the ‘DATETIME’ timestamp, temperature, actual and predicted demand in a .csv file for further analysis and visualisation by any appropriate tools such as Tableau. 
+
+\bigskip
+
+The built model and the scalers of temperature and demand were saved so that the prediction program can work independently by loading this model and scalers. Various combinations of the attributes were used until the best combination was determined. The final columns used in the model were TEMPERATURE, WEEKEND, PUBLIC_HOLIDAY, MONTH (one-hot encoded), HOUR(one-hot encoded) and TOTALDEMAND.
+
+## Prediction Algorithm
+
+Based on the model, the forecast temperature is required to forecast demand. The data for ‘time_steps’ (e.g., 24) number of records of actual demand prior to the forecast period also required for the time series LSTM model to work. All other inputs can be prepared based on the ‘DATETIME’ timestamp.
+
+\bigskip
+
+Suppose the actual demand information available weekly on Sunday midday, and the requirement is to provide a forecast of demand for the following week. With the forecast of temperature for that week, the input data will be built with the appropriate timeslot related input, temperature, with the actual demand filed set to zero.
+
+\bigskip
+
+The last 24 timeslots of complete data records including actual demand will be joined in front of the forecast records. The prediction program loads the saved neural network model, scalers for temperature and demand and load the entire dataset and convert to appropriate input format with the necessary scaling. As the month and hour data (if the forecast only for few hours, not for 24 hours or a week) will be limited, it can not use standard one hot encoding. So, the program builds this encoding programmatically.
+
+\bigskip
+
+Once the input is transformed, the algorithm, picks the first 24 records, and predict the demand for the 25th slot. While recording this information for output, the actual demand for the 25th record will be updated with this predicted demand value and the oldest record (1st record) will be dropped.
+
+\bigskip
+
+Now having complete records for the first 24 records again, the above process is repeated until all the necessary forecast demands having been performed. Practically the future forecast demand is based on the forecast, so it is possible to have the error build cumulatively. However, if the actual demand data is available say every hour, then the program can predict the forecast hourly with much accurate input. The forecast period also will be decided by the stakeholders. 
+
+\bigskip
+
+The test result was recorded along with the ‘DATETIME’ time stamp, temperature, predicted demand in a .csv file for distribution to relevant stakeholders. The model can be re-trained every month or even daily to cover latest environmental and policy impacts as training will take less than 10 minutes on an average computer without the GPU support for 3 year data.
+
+# Exploratory Data Analysis
 
 
-```{python}
-import numpy as np
-np.random.seed(1)
-np.random.normal(0.0, 1.0, size=10)
-```
+## Using Tableau 
 
-```{python, engine.path = '/usr/bin/python'}
-import pandas as pd
-import matplotlib.pyplot as plt
-df=pd.DataFrame([[1, 2], [3, 4], [4, 3], [2, 3]])
-fig = plt.figure(figsize=(4, 4))
-for i in df.columns:
-    ax=plt.subplot(2,1,i+1) 
-    df[[i]].plot(ax=ax)
-    print(i)
+**Year to year monthly temperature-demand trend**
+\newline
+\newline
+- Given temperature and demand data is from Jan’10 to Mar’21 
+\newline
+- Monthly avg. temperature varies 2/3 degrees
+\newline
+- Demand is comparatively higher during winter season (Jun-Aug) 
+\newline
+- Overall demand shows reduction in the recent years
+\newline
 
-plt.show()
-```
+\begin{figure}[H]
+\includegraphics{snapshots/monthly trend.png}
+\caption{Total Electricity Demand and Avg. Temperature trend in different months}\label{4.1}
+\end{figure}
 
+**Monthly temperature-demand in diff. weekdays trend**
+\newline
+\newline
+- Different months have different demand pattern in different weeks days
+\newline
+- Year to year the pattern is not same
+\newline
+
+\begin{figure}[H]
+\includegraphics{snapshots/Weekdays trend 1.png}
+\caption{Total Electricity Demand and Avg. Temperature trend in different days}\label{4.2}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots/Weekdays trend 2.png}
+\caption{Total Electricity Demand and Avg. Temperature trend in different days}\label{4.3}
+\end{figure}
+
+**Hourly temperature-demand in diff. weekdays trend**
+\newline
+\newline
+- Demand somewhat follows temperature during off peak (night-time) time
+\newline
+- Demand variation during daytime varies in different days and not always proportional to temperature
+\newline
+
+\begin{figure}[H]
+\includegraphics{snapshots/Hourly Trend 1.png}
+\caption{Hourly total Electricity Demand and Avg. Temperature in different weekdays}\label{4.4}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots/Hourly Trend 2.png}
+\caption{Hourly total Electricity Demand and Avg. Temperature in different weekdays}\label{4.5}
+\end{figure}
+
+**Hourly Forecast vs. Demand (Jan and Aug 2020 first 10 days)**
+\newline
+\newline
+- Current forecasts are pretty good in some hours and in some months
+\newline
+- Forecast suffers accuracy during daytime
+\newline
+
+\begin{figure}[H]
+\includegraphics{snapshots/Current forecast 1.png}
+\caption{Current forecast and actual demand}\label{4.6}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots/Current forecast 2.png}
+\caption{Current forecast and actual demand}\label{4.7}
+\end{figure}
+
+**2021 prediction results vs actual demand**
+\newline
+\newline
+- LSTM model output shows good performance during off peak time
+\newline
+- In some month (March) prediction seems very good
+
+\begin{figure}[H]
+\includegraphics{snapshots/Prediction 1.png}
+\caption{LSTM Model Prediction and Actual Demand}\label{4.8}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots/Prediction 2.png}
+\caption{LSTM Model Prediction and Actual Demand}\label{4.9}
+\end{figure}
 
 # Analysis and Results
 
@@ -175,6 +273,7 @@ Put the results you got in the previous chapter in perspective with respect to t
 # Conclusion and Further Issues {.label:ccl}
 
 What are the main conclusions? What are your recommendations for the "client"? What further analysis could be done in the future?
+The Long short-term memory (LSTM) model performs well when predicting electricity demand for NSW, Australia. Using the last X timestamps, the pre-processed data is given as input which is then processed by the LSTM and gives a Root Mean Square Error (RMSE) of X. This can be used profitably by the client through the appropriate pricing based on model outputs, with an appropriate profit margin to account for variance in the model. Although the LSTM has worked well, there is no doubt that more data (i.e. Solar PV data or even an increased granularity in timestamps) could decrease the model error and make pricing more efficient for the client. Furthermore, other deep-learning architectures may be explored as well, even though an LSTM worked successfully on this occasion. However, it is important to note that, as was evident in this analysis, that inducing a more complex network structure to model the data did not always improve model accuracy. 
 
 A figure:
 
