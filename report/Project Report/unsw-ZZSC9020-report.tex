@@ -635,9 +635,9 @@ LSTM structure is the ideal model to work with.
 
 \bigskip
 
-\hypertarget{lstm-model-only-using-time-series-data}{%
-\section{LSTM Model -- Only Using Time-Series
-Data}\label{lstm-model-only-using-time-series-data}}
+\hypertarget{lstm-model-only-using-previous-total-demand-values}{%
+\section{LSTM Model -- Only Using Previous Total Demand
+Values}\label{lstm-model-only-using-previous-total-demand-values}}
 
 The early LSTM structure, which happens to be a mono-directional model
 just uses the time series of actual demand with a lookback of 24
@@ -692,11 +692,11 @@ models - with the MLP treating each timestamp as a categorical variable.
 In the final LSTM model, the timestamps are treated as a sequence which
 may perhaps explain this reduction in error. It was also of note that
 the morning timestamps often had the biggest errors associated with them
-in the MLP model. Although it difficult to theorise the variation here,
-a possible explanation for poor performance in the MLP model in this
-specific area is that energy demand dramatically picks up once people
-start to wake up and that the categories associated with the early
-morning timestamps have miscalculated weights in the network.
+in the MLP model. Although it is difficult to theorise the variation
+here, a possible explanation for poor performance in the MLP model in
+this specific area is that energy demand dramatically picks up once
+people start to wake up and that the categories associated with the
+early morning timestamps have miscalculated weights in the network.
 
 \bigskip
 
@@ -765,7 +765,50 @@ data does not always improve model accuracy.
 \section*{\texorpdfstring{\textbf{Codes}}{Codes}}\label{codes}}
 \addcontentsline{toc}{section}{\textbf{Codes}}
 
-Add you codes here.
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_1.png}
+\caption{LSTM Model Build 1}\label{ModelBuild1}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_2.png}
+\caption{LSTM Model Build 2}\label{ModelBuild2}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_3.png}
+\caption{LSTM Model Build 3}\label{ModelBuild3}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_4.png}
+\caption{LSTM Model Build 4}\label{ModelBuild4}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_5.png}
+\caption{LSTM Model Build 5}\label{ModelBuild5}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_6.png}
+\caption{LSTM Model Build 6}\label{ModelBuild6}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/new LSTM_Forecast_1.png}
+\caption{LSTM Forecast 1}\label{LSTMForecast1}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/new LSTM_Forecast_2.png}
+\caption{LSTM Forecast 2}\label{LSTMForecast2}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/new LSTM_Forecast_3.png}
+\caption{LSTM Forecast 3}\label{LSTMForecast3}
+\end{figure}
 
 \hypertarget{model-results}{%
 \section*{\texorpdfstring{\textbf{Model

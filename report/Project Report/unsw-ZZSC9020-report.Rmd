@@ -273,7 +273,7 @@ The MLP model used 3 hidden layers of 200, 100 and 200 neurons with the final ou
 
 \bigskip
 
-## LSTM Model – Only Using Time-Series Data
+## LSTM Model – Only Using Previous Total Demand Values
 
 The early LSTM structure, which happens to be a mono-directional model just uses the time series of actual demand with a lookback of 24 records, produced a significantly better result than the first model. The model trained with an RMSE of 100MW, which was superior to the 450-500MW RMSE achieved previously. Naturally, this model was picked for fine-tuning with appropriate feature inputs and hyper parameters.
 
@@ -295,7 +295,7 @@ The results presented in the previous chapter demonstrate that a bidirectional L
 
 \bigskip
 
-The basic MLP model produced a mean square error of around 7 times higher than the final model, which perhaps speaks of its inability to work with this type of demand timeseries data. Part of this poor performance is the difference in how inputs were processed for the models - with the MLP treating each timestamp as a categorical variable. In the final LSTM model, the timestamps are treated as a sequence which may perhaps explain this reduction in error. It was also of note that the morning timestamps often had the biggest errors associated with them in the MLP model. Although it difficult to theorise the variation here, a possible explanation for poor performance in the MLP model in this specific area is that energy demand dramatically picks up once people start to wake up and that the categories associated with the early morning timestamps have miscalculated weights in the network.
+The basic MLP model produced a mean square error of around 7 times higher than the final model, which perhaps speaks of its inability to work with this type of demand timeseries data. Part of this poor performance is the difference in how inputs were processed for the models - with the MLP treating each timestamp as a categorical variable. In the final LSTM model, the timestamps are treated as a sequence which may perhaps explain this reduction in error. It was also of note that the morning timestamps often had the biggest errors associated with them in the MLP model. Although it is difficult to theorise the variation here, a possible explanation for poor performance in the MLP model in this specific area is that energy demand dramatically picks up once people start to wake up and that the categories associated with the early morning timestamps have miscalculated weights in the network.
 
 
 \bigskip
@@ -323,7 +323,52 @@ The bi-directional Long short-term memory (LSTM) model performs well when predic
 
 ## **Codes** {-}
 
-Add you codes here.
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_1.png}
+\caption{LSTM Model Build 1}\label{ModelBuild1}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_2.png}
+\caption{LSTM Model Build 2}\label{ModelBuild2}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_3.png}
+\caption{LSTM Model Build 3}\label{ModelBuild3}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_4.png}
+\caption{LSTM Model Build 4}\label{ModelBuild4}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_5.png}
+\caption{LSTM Model Build 5}\label{ModelBuild5}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM_Build_Model_6.png}
+\caption{LSTM Model Build 6}\label{ModelBuild6}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/new LSTM_Forecast_1.png}
+\caption{LSTM Forecast 1}\label{LSTMForecast1}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/new LSTM_Forecast_2.png}
+\caption{LSTM Forecast 2}\label{LSTMForecast2}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{snapshots1/new LSTM_Forecast_3.png}
+\caption{LSTM Forecast 3}\label{LSTMForecast3}
+\end{figure}
+
+
 
 ## **Model Results** {-}
 
