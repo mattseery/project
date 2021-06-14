@@ -5,14 +5,16 @@
 \contentsline {section}{\numberline {3.2}Description of the Data}{4}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Pre-processing Steps and Data Cleaning}{5}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Assumptions}{6}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Modelling Methods}{6}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Modelling Methods}{7}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Prediction Algorithm}{8}{section.3.6}%
 \contentsline {chapter}{\numberline {Chapter 4}Exploratory Data Analysis}{9}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Using Tableau}{9}{section.4.1}%
-\contentsline {chapter}{\numberline {Chapter 5}Analysis and Results}{17}{chapter.5}%
-\contentsline {section}{\numberline {5.1}A First Model}{17}{section.5.1}%
-\contentsline {chapter}{\numberline {Chapter 6}Discussion}{18}{chapter.6}%
-\contentsline {chapter}{\numberline {Chapter 7}Conclusion and Further Issues}{19}{chapter.7}%
-\contentsline {chapter}{Appendix}{22}{chapter*.6}%
-\contentsline {section}{\textbf {Codes}}{22}{section*.7}%
-\contentsline {section}{\textbf {Tables}}{22}{section*.8}%
+\contentsline {chapter}{\numberline {Chapter 5}Analysis and Results}{18}{chapter.5}%
+\contentsline {section}{\numberline {5.1}A First Model}{18}{section.5.1}%
+\contentsline {section}{\numberline {5.2}LSTM Model -- Only Using Time-Series Data}{18}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Ulimate LSTM Model}{18}{section.5.3}%
+\contentsline {chapter}{\numberline {Chapter 6}Discussion}{20}{chapter.6}%
+\contentsline {chapter}{\numberline {Chapter 7}Conclusion and Further Issues}{22}{chapter.7}%
+\contentsline {chapter}{Appendix}{25}{chapter*.6}%
+\contentsline {section}{\textbf {Codes}}{25}{section*.7}%
+\contentsline {section}{\textbf {Tables}}{25}{section*.8}%

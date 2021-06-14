@@ -12,7 +12,7 @@ date: "15/06/2021"
 Acknowledgements: 
   - "All thanks must go to our families and university professors who have guided us through this Capstone Project. Without them this would not be possible."
 
-Abstract: "Forecasting electricity demand is an important requirement as there are now more interested stakeholders associated with the generation and distribution of this service. Traditionally electricity demand was just the concern of governments. However, this has now been extended to market bodies and owners and operators of the underlying infrastructure required for this service. Forecasting accurate energy demand not only supports network infrastructure, but also aides investment decisions about power generation. It is of thus of interest to a variety of stakeholders including power utilities, energy policymakers, and private investors just to name a few. This study aims to demonstrate how neural network (specifically LSTM neural networks) can be used to accurately forecast short-term energy demand. The focus will be on attributes such as temperature, month of the year, day of the week and time of the day as well as how past time lags can be used to predict future demand values. It is envisaged that the results of this study will provide useful insights for governments and market bodies to assist in the rules, policies and pricing that are invoked on the energy sector. Additionally, the businesses operating in this sector can use this information to guide their decision-making regarding electricity generation and distribution, as well as for the purpose of price benchmarking."
+Abstract: "Forecasting electricity demand is an important requirement as there are now more interested stakeholders associated with the generation and distribution of this service. Traditionally electricity demand was just the concern of governments. However, this has now been extended to market bodies and owners and operators of the underlying infrastructure required for this service. Forecasting accurate energy demand not only supports network infrastructure, but also aides investment decisions about power generation. It is thus of interest to a variety of stakeholders including power utilities, energy policymakers, and private investors just to name a few. This study aims to demonstrate how neural network (specifically LSTM neural networks) can be used to accurately forecast short-term energy demand. The focus will be on attributes such as temperature, month of the year, day of the week and time of the day as well as how past time lags can be used to predict future demand values. It is envisaged that the results of this study will provide useful insights for governments and market bodies to assist in the rules, policies and pricing that are invoked on the energy sector. Additionally, the businesses operating in this sector can use this information to guide their decision-making regarding electricity generation and distribution, as well as for the purpose of price benchmarking."
 output:
   pdf_document:
     template: template.tex
@@ -35,7 +35,7 @@ Towards the end of the 20th century, countries throughout the world began moving
 
 \bigskip
 
-Temperature plays a significant role in electricity demand. This is because heating is utilised more by customers in the cooler months while cooling is required for the hottest months of the year. For that reason, temperature is an essential attribute that will be investigated in this study. However, temperature does not account for other factors such as humidity or varying electricity usage patterns associated with specific days of the weeks. For example, a temperature of 25 degrees in Spring may not lead to as much usage of air conditioning as a humid day in Summer with the same temperature. Additionally, the rate of usage of electricity will inevitably vary between weekdays, weekends, and public holidays due to the varying ratios of usage between business and residential customers. Therefore, the month of the year, day of the week and time of day will also be examined in this study.
+Temperature plays a significant role in electricity demand. This is because heating is utilised more by customers in the cooler months while cooling is required for the hottest months of the year. For that reason, temperature is an essential attribute that will be investigated in this study. However, temperature does not account for other factors such as humidity or varying electricity usage patterns associated with specific days of the weeks. For example, a temperature of 25 degrees in Spring may not lead to as much usage of air conditioning as a humid day in Summer with the same temperature. Additionally, the usage rate of electricity will inevitably vary between weekdays, weekends, and public holidays due to the varying ratios of usage between business and residential customers. Therefore, the month of the year, day of the week and time of day will also be examined in this study.
 
 # Literature Review
 
@@ -43,7 +43,7 @@ There have been various studies undertaken where more traditional statistical me
 
 \bigskip
 
-Up until the time of writing, the majority of deep learning models being appliied to energy forecasting fall under the subset of three major ways \cite{Kumar2013}. These are: A feed forward neural network (FFNN)/Multi Layer Perceptron (MLP) through the process of increasing the number of hidden layers, some form of recurrence through a recurrent neural network (RNN), long-short term memory (LSTM) or gated recurrent unit (GRU), or through sequentially combining different types of algorithms into an overall structure. In 2020, Xue et al. contrasted these different approaches in order to forecast the heating demand of a district system \cite{Xue2020}. Their experiments showed that the LSTM models were among the highest-performing models tested for. 
+Up until the time of writing, the majority of deep learning models being appliied to energy forecasting fall under the subset of three major types \cite{Kumar2013}. These are: A feed forward neural network (FFNN)/Multi Layer Perceptron (MLP) through the process of increasing the number of hidden layers, some form of recurrence through a recurrent neural network (RNN), long-short term memory (LSTM) or gated recurrent unit (GRU), or through sequentially combining different types of algorithms into an overall structure. In 2020, Xue et al. contrasted these different approaches in order to forecast the heating demand of a district system \cite{Xue2020}. Their experiments showed that the LSTM models were amongst the highest-performing of the models tested. 
 
 \bigskip
 
@@ -61,7 +61,7 @@ A variety of software was used in the analysis as well as for collaboration and 
 
 \bigskip
 
-For data analysis purposes, Python, R/Rstudio and Tableau were all used. R was utilised in the initial exploratory data analysis phase in conjunction with Tableau, to visualise the dataset and to observe any obvious trends in the energy data. Tableau was especially useful in visualisation as it allowed the segmentation of days, times and months to be easily discerned in reference to energy demand. The main software used for the electricity demand modelling was Python. It was also used to clean, transform, and replace missing values in the supplied data and for merging separate datasets. including the final LSTM model which was constructed. 
+For data analysis purposes, Python, R/Rstudio and Tableau were all used. R was utilised in the initial exploratory data analysis phase in conjunction with Tableau, to visualise the dataset and to observe any obvious trends in the energy data. Tableau was especially useful in visualisation as it allowed the segmentation of days, times and months to be easily discerned in reference to energy demand. The main software used for the electricity demand modelling was Python. It was also used to clean, transform, and replace missing values in the supplied data and for merging separate datasets including the final LSTM model which was constructed. 
 
 \bigskip
 
@@ -77,7 +77,7 @@ The file temperature_nsw.csv also contains three columns. The columns record the
 
 \bigskip
 
-The third file, forecastdemand_nsw.csv, contains periodic forecasts (FORECASTDEMAND) for a set date and time (DATETIME) and the date and time the forecast was made(LASTCHANGED). The values in the FORECASTDEMAND column align with the same range of dates in the totaldemand_nsw.csv file. The format of the date and time in this column and the DATETIME column is the same as the DATETIME column in the totaldemand_nsw.csv file. The forecastdemand_nsw.csv file also includes a REGIONID column and all with the same values as the totaldemand_nsw.csv file. There is also a column called PREDISPATCHSEQNO which contains a unique id number for each forecast and a PERIODID column which contains a unique ID for forecasts of each unique date and time in the DATETIME column. The data in this file was not used in the neural network models that were tested.
+The third file, forecastdemand_nsw.csv, contains periodic forecasts (FORECASTDEMAND) for a set date and time (DATETIME) and the date and time the forecast was made (LASTCHANGED). The values in the FORECASTDEMAND column align with the same range of dates in the totaldemand_nsw.csv file. The format of the date and time in this column and the DATETIME column is the same as the DATETIME column in the totaldemand_nsw.csv file. The forecastdemand_nsw.csv file also includes a REGIONID column and all with the same values as the totaldemand_nsw.csv file. There is also a column called PREDISPATCHSEQNO which contains a unique id number for each forecast and a PERIODID column which contains a unique ID for forecasts of each unique date and time in the DATETIME column. The data in this file was not used in the neural network models that were tested.
 
 ## Pre-processing Steps and Data Cleaning
 
@@ -85,7 +85,7 @@ The data in the file totaldemand_nsw.csv required no further cleaning other than
 
 \bigskip
 
-For dates between March 2016 and April 2018, hourly temperature recordings were collected for the Bankstown weather station (Station Number 66137) from datasets found at data.gov.au \cite{DATAGOV}. Between May 2010 and May 2011, there were sections of the dataset where more than10 consecutive timestamps were missing. Additionally, they passed through time periods where the maximum or minimum temperature of the day normally occurred. Therefore, either a maximum or minimum temperature for these days was sourced from the Bureau of Meteorology  \cite{BOM} for the Bankstown weather station. These temperatures were then assigned to an estimated hour of the day where the maximum or minimum temperature was likely to have occurred based on when maximum or minimum temperatures occurred on the 3 proceeding and following 3 days. There was also missing timestamps for the 21st of May 2018 between 10:30 and 17:00. However, not even a maximum temperature could be sourced for this day. Therefore, an estimate for the maximum temperature and the time of day it occurred was made using the proceeding and following 3 days as a guide. These sourced temperatures and their associated timestamps were placed in a separate csv file and then merged with the original temperature dataset.
+For dates between March 2016 and April 2018, hourly temperature recordings were collected for the Bankstown weather station (Station Number 66137) from datasets found at data.gov.au \cite{DATAGOV}. Between May 2010 and May 2011, there were sections of the dataset where more than 10 consecutive timestamps were missing. Additionally, they passed through time periods where the maximum or minimum temperature of the day normally occurred. Therefore, either a maximum or minimum temperature for these days was sourced from the Bureau of Meteorology  \cite{BOM} for the Bankstown weather station. These temperatures were then assigned to an estimated hour of the day where the maximum or minimum temperature was likely to have occurred based on when maximum or minimum temperatures occurred on the 3 proceeding and following 3 days. There was also missing timestamps for the 21st of May 2018 between 10:30 and 17:00. However, not even a maximum temperature could be sourced for this day. Therefore, an estimate for the maximum temperature and the time of day it occurred was made using the proceeding and following 3 days as a guide. These sourced temperatures and their associated timestamps were placed in a separate csv file and then merged with the original temperature dataset.
 
 \bigskip
 
@@ -106,15 +106,24 @@ Additional columns were also generated using the values in the HOUR and MONTH co
 
 ## Assumptions
 
-What assumptions are you making on the data?
-
-## Modelling Methods
-
-Before the dataset described in Chapter 3.3 could be used for modelling, transformations were required for some attributes. Columns with ordinal number values, including the columns DAY, DAY_OF_WEEK, MONTH, HOUR, TIME_OF_DAY and SEASON, were transformed using one-hot encoding. The dataset was then split into a training and test set. A minimum maximum scalar was then fitted for each of continuous values in the training set. This was performed on the TEMPERATURE and TOTALDEMAND columns where values were proportionally reassigned to values between 0 and 1. These fittings were then used to transform the TEMPERATURE and TOTALDEMAND columns in both the training and test set. By Experiment we limit the inputs to month and hour as categorical variables, identification as whether it is a weekday or weekend and the day happened to be a public holiday.
+It is assumed that the provided data was accurate and that the actual demand figures are correct. There may be errors in temperature recordings as evident by missing records for temperature. In addition to that, recorded temperatures at one location may not be a true representation for the entire region. 
 
 \bigskip
 
-The LSTM model has been designed to use the attributes of a designated number of immediately previous timestamps to the record that is either being trained or predicted. This number is set by a variable called ‘time_steps’. A function was then created to transform both the X value for the training and test datasets into a three-dimensional matrix. The three dimensions represent the number of records in the dataset, the number of immediately prior records (time_steps) to the current record and the number of features used for these prior records. This therefore means that for each dataset the first number of records, equal to the value of the time_steps variable, cannot be trained or predicted by the model. This is because the number of previous records in the dataset for these records is less than the value of the time_steps variable. It should also be noted that the value of the total demand for the previous records were also included in the matrix of X values. The y value fed to the neural network is the total demand for the current record being either trained or predicted.
+It is recognised that the Solar PV data influences the actual electricity demand. Furthermore, it is assumed that currently there is no mechanism to get this data to the granule of the region for each timestamp.
+
+\bigskip
+
+With these limitations, the assumption is that it the given data is sufficient to predict the forecast demand within a range 5-10% of the actual demand.
+
+\bigskip
+## Modelling Methods
+
+Before the dataset described in Chapter 3.3 could be used for modelling, transformations were required for some attributes. Columns with ordinal number values, including the columns DAY, DAY_OF_WEEK, MONTH, HOUR, TIME_OF_DAY and SEASON, were transformed using one-hot encoding. The dataset was then split into a training and test set. A minimum maximum scalar was then fitted for each of continuous values in the training set. This was performed on the TEMPERATURE and TOTALDEMAND columns where values were proportionally reassigned to values between 0 and 1. These fittings were then used to transform the TEMPERATURE and TOTALDEMAND columns in both the training and test set. From experimentation we limited the inputs to month and hour as categorical variables, identifying whether it is a weekday or weekend and identifying if the day was a public holiday.
+
+\bigskip
+
+The LSTM model has been designed to use the attributes of a designated number of immediately previous timestamps to the record that is either being trained or predicted. This number is set by a variable called ‘time_steps’. A function was then created to transform both the X value for the training and test datasets into a three-dimensional matrix. The three dimensions represent the number of records in the dataset, the number of immediately prior records (time_steps) to the current record and the number of features used for these prior records. This therefore means that for each dataset the first number of records, equal to the value of the time_steps variable, cannot be trained or predicted by the model. This is because the number of previous records in the dataset for these records is less than the value of the time_steps variable. It should also be noted that the total demand values from the previous records were also included in the matrix of X values. The y value fed to the neural network is the total demand for the current record being either trained or predicted.
 
 \bigskip
 
@@ -128,21 +137,22 @@ The test result was recorded along with the ‘DATETIME’ timestamp, temperatur
 
 The built model and the scalers of temperature and demand were saved so that the prediction program can work independently by loading this model and scalers. Various combinations of the attributes were used until the best combination was determined. The final columns used in the model were TEMPERATURE, WEEKEND, PUBLIC_HOLIDAY, MONTH (one-hot encoded), HOUR(one-hot encoded) and TOTALDEMAND.
 
+\bigskip
 ## Prediction Algorithm
 
-Based on the model, the forecast temperature is required to forecast demand. The data for ‘time_steps’ (e.g., 24) number of records of actual demand prior to the forecast period also required for the time series LSTM model to work. All other inputs can be prepared based on the ‘DATETIME’ timestamp.
+Based on the model, the forecast temperature is an important factor for forecasting demand. The data for ‘time_steps’ (e.g., 24) number of records of actual demand prior to the forecast period is also required for the time series LSTM model to work. All other inputs can be prepared based on the ‘DATETIME’ timestamp.
 
 \bigskip
 
-Suppose the actual demand information available weekly on Sunday midday, and the requirement is to provide a forecast of demand for the following week. With the forecast of temperature for that week, the input data will be built with the appropriate timeslot related input, temperature, with the actual demand filed set to zero.
+Suppose the actual demand information available weekly is on Sunday midday, and the requirement is to provide a forecast of demand for the following week. With the forecast of temperature for that week, the input data will be built with the appropriate timeslot related input, temperature, with the actual demand filed set to zero.
 
 \bigskip
 
-The last 24 timeslots of complete data records including actual demand will be joined in front of the forecast records. The prediction program loads the saved neural network model, scalers for temperature and demand and load the entire dataset and convert to appropriate input format with the necessary scaling. As the month and hour data (if the forecast only for few hours, not for 24 hours or a week) will be limited, it can not use standard one hot encoding. So, the program builds this encoding programmatically.
+The last 24 timeslots of complete data records including actual demand will be joined in front of the forecast records. The prediction program loads the saved neural network model, the scalers for temperature and demand and then loads the entire dataset and converts it to the appropriate input format with the necessary scaling. As the month and hour data (if the forecast is only for a few hours and not for 24 hours or a week) will be limited, it can not use standard one hot encoding. So, the program builds this encoding programmatically.
 
 \bigskip
 
-Once the input is transformed, the algorithm, picks the first 24 records, and predict the demand for the 25th slot. While recording this information for output, the actual demand for the 25th record will be updated with this predicted demand value and the oldest record (1st record) will be dropped.
+Once the input is transformed, the algorithm picks the first 24 records, and predicts the demand for the 25th slot. While recording this information for output, the actual demand for the 25th record will be updated with this predicted demand value and the oldest record (1st record) will be dropped.
 
 \bigskip
 
@@ -170,7 +180,7 @@ The test result was recorded along with the ‘DATETIME’ time stamp, temperatu
 \newline
 
 \begin{figure}[H]
-\includegraphics{snapshots/monthly trend.png}
+\includegraphics{snapshots1/Slide 2 snapshot.png}
 \caption{Total Electricity Demand and Avg. Temperature trend in different months}\label{4.1}
 \end{figure}
 
@@ -183,12 +193,12 @@ The test result was recorded along with the ‘DATETIME’ time stamp, temperatu
 \newline
 
 \begin{figure}[H]
-\includegraphics{snapshots/Weekdays trend 1.png}
+\includegraphics{snapshots1/Slide 3 snapshot 1.png}
 \caption{Total Electricity Demand and Avg. Temperature trend in different days}\label{4.2}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots/Weekdays trend 2.png}
+\includegraphics{snapshots1/Slide 3 snapshot 2.png}
 \caption{Total Electricity Demand and Avg. Temperature trend in different days}\label{4.3}
 \end{figure}
 
@@ -201,12 +211,12 @@ The test result was recorded along with the ‘DATETIME’ time stamp, temperatu
 \newline
 
 \begin{figure}[H]
-\includegraphics{snapshots/Hourly Trend 1.png}
+\includegraphics{snapshots1/Slide 4 snapshot 1.png}
 \caption{Hourly total Electricity Demand and Avg. Temperature in different weekdays}\label{4.4}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots/Hourly Trend 2.png}
+\includegraphics{snapshots1/Slide 4 snapshot 2.png}
 \caption{Hourly total Electricity Demand and Avg. Temperature in different weekdays}\label{4.5}
 \end{figure}
 
@@ -219,12 +229,12 @@ The test result was recorded along with the ‘DATETIME’ time stamp, temperatu
 \newline
 
 \begin{figure}[H]
-\includegraphics{snapshots/Current forecast 1.png}
+\includegraphics{snapshots1/Slide 5 snapshot 1.png}
 \caption{Current forecast and actual demand}\label{4.6}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots/Current forecast 2.png}
+\includegraphics{snapshots1/Slide 5 snapshot 2.png}
 \caption{Current forecast and actual demand}\label{4.7}
 \end{figure}
 
@@ -236,12 +246,12 @@ The test result was recorded along with the ‘DATETIME’ time stamp, temperatu
 - In some month (March) prediction seems very good
 
 \begin{figure}[H]
-\includegraphics{snapshots/Prediction 1.png}
+\includegraphics{snapshots1/Slide 6 snapshot 1.png}
 \caption{LSTM Model Prediction and Actual Demand}\label{4.8}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots/Prediction 2.png}
+\includegraphics{snapshots1/Slide 6 snapshot 2.png}
 \caption{LSTM Model Prediction and Actual Demand}\label{4.9}
 \end{figure}
 
@@ -249,38 +259,56 @@ The test result was recorded along with the ‘DATETIME’ time stamp, temperatu
 
 ## A First Model
 
-Having a very simple model is always good so that you can benchmark any result you would obtain with a more elaborate model.
+The categorical variables: month, day of the week and the 48 half-hour timestamps along with the temperature and actual demand were used to train the Multilayer Perceptron (MLP) model. With various tunings of hyper parameters with regards to dropout, learning rate,  hidden layers and neurons, the best achieved Root Mean Square Error (RMSE) was about 450-500MW on both the train and test dataset. Based on this result, it was clearly indicating that the bias is high in the morning session timestamps, which could suggest that some features were missing and that the model didn't incorporate all of the variation in energy demand.  One of these key missing features here is Solar PV, which is unable to be accurately provided for each region and timeslot at this stage.
 
 \bigskip
 
-For example, one can use the linear regression model
+The MLP model used 3 hidden layers of 200, 100 and 200 neurons with the final output layer, all using ‘Relu’ as the activation function. The ultimate model should be significantly better than the error associated with this MLP model, and the benchmark RMSE should be around 85MW as per the currently deployed model. The provided data is a time series which should hence produce a better result. Based on the literature review, a LSTM structure is the ideal model to work with.
 
-$$
-Y_i = \beta_0 + \beta_1 x_{1i} + \cdots \beta_p x_{pi} + \epsilon_i, \qquad i=1,\ldots,n.
-$$
-where it is assumed that the $\epsilon_i$'s are i.i.d.\ $N(0,1)$.
+\bigskip
+
+## LSTM Model – Only Using Time-Series Data
+
+The early LSTM structure, which happens to be a mono-directional model just uses the time series of actual demand with a lookback of 24 records, produced a significantly better result than the first model. The model trained with an RMSE of 100MW, which was superior to the 450-500MW RMSE achieved previously. Naturally, this model was picked for fine-tuning with appropriate feature inputs and hyper parameters.
+
+\bigskip
+
+## Ulimate LSTM Model
+
+The temperature is a key feature in the dataset - extreme temperatures require heavy cooling or heating (depending on where they are on the spectrum) which puts severe demand on electricity. Based on the time of day, as well as if it is a weekday or weekend, the electricity usage will differ. This implies various categorical inputs based on the timestamp play a bigger role. As described in the modelling methods chapter of the analysis, categorical variables span MONTH and HOUR along with weekday/weekend status and whether it is a public holiday or not. It was noted that the temperature and demand scaled between 0 and 1 which improved the result. A BIDRIECTIONAL LSTM structure takes a bit more time to train but further improved the result.
+
+\bigskip
+
+The final model was produced with a 50 node bidirectional single LSTM with ‘Relu’ as activation function. This was trained with data from 2018-2020 with 30 epochs, a batch size of 32 and a lookback of 24 timestamps. Furthermore, a validation split of 10% and test set of 2021 produced an excellent result, with an RMSE less than 70MW (66.55MW) on test data as well as an average percentage difference of 0.66%.
+
+
 
 # Discussion
 
-Put the results you got in the previous chapter in perspective with respect to the problem studied.
+The results presented in the previous chapter demonstrate that a bidirectional LSTM presents an effective approach to developing accurate forecasting models for energy demand. The bidirectional LSTM outperforms all other tested models, including a mono-directional LSTM and basic MLP, which do not appear to have the same forecasting abilities in this application with the time-series data with a limited amount of features. 
+
+\bigskip
+
+The basic MLP model produced a mean square error of around 7 times higher than the final model, which perhaps speaks of its inability to work with this type of demand timeseries data. Part of this poor performance is the difference in how inputs were processed for the models - with the MLP treating each timestamp as a categorical variable. In the final LSTM model, the timestamps are treated as a sequence which may perhaps explain this reduction in error. It was also of note that the morning timestamps often had the biggest errors associated with them in the MLP model. Although it difficult to theorise the variation here, a possible explanation for poor performance in the MLP model in this specific area is that energy demand dramatically picks up once people start to wake up and that the categories associated with the early morning timestamps have miscalculated weights in the network.
+
+
+\bigskip
+
+The LSTM model that was originally tested overcame this issue of treating the timestamps as categories - rather it took the timestamps in sequence which appeared to dramatically decrease the RMSE, approaching those benchmark error figures of 85MW. Most of the variation in energy demand was captured here and no consistent trends were found in the errors unlike in the MLP model. As was discovered in the literature review prior to the analysis, this was expected as LSTM networks are highly suited for classification and regression prediction problems, based on time series data - which this energy demand dataset is.  
+
+\bigskip
+
+The final bidirectional model was far superior to all models tested, beats benchmark RMSE figures and gives sufficient evidence to the client that this can be used profitably to price energy. Due to the model being market-leading, it can both be used for a variety of reasons including for private investors, market efficiency or to aide governments in appropriate electricity distribution. The model works on the basis of fairly straightforward idea when compared to the mono-directional LSTM. The main difference here is that the first recurrent layer in the network is duplicated so that there are two layers alongside each other. Furthermore, the first layer receives the input sequence as an input as-is, whilst the second layer is provided a reversed copy of the input sequence. 
+
+\bigskip
+
+As mentioned previously, perhaps the addition of extra datasets (either Solar PV data or otherwise) with timestamps associated may improve the quality of predictions and reduce the model error even further. Although the bidirectional LSTM worked extremely well for this application, other network architectures may also be explored in future.
 
 # Conclusion and Further Issues {.label:ccl}
 
-What are the main conclusions? What are your recommendations for the "client"? What further analysis could be done in the future?
-The Long short-term memory (LSTM) model performs well when predicting electricity demand for NSW, Australia. Using the last X timestamps, the pre-processed data is given as input which is then processed by the LSTM and gives a Root Mean Square Error (RMSE) of X. This can be used profitably by the client through the appropriate pricing based on model outputs, with an appropriate profit margin to account for variance in the model. Although the LSTM has worked well, there is no doubt that more data (i.e. Solar PV data or even an increased granularity in timestamps) could decrease the model error and make pricing more efficient for the client. Furthermore, other deep-learning architectures may be explored as well, even though an LSTM worked successfully on this occasion. However, it is important to note that, as was evident in this analysis, that inducing a more complex network structure to model the data did not always improve model accuracy. 
+The bi-directional Long short-term memory (LSTM) model performs well when predicting electricity demand for NSW, Australia. Using the last 24 timestamps, the pre-processed data is given as input which is then fed through the model and gives a Root Mean Square Error (RMSE) of 66.55MW and an average percentage error difference of 0.66% in the sample tested. This can be used profitably by the client through the appropriate pricing based on model outputs, with an appropriate profit margin to account for variance in the model. Although the bi-directional LSTM has worked well, there is no doubt that more data (i.e. Solar PV data or even an increased granularity in timestamps) could decrease the model error and make pricing more efficient for the client. Furthermore, other deep-learning architectures may be explored as well in the future, even though this model architecture worked successfully on this occasion. However, it is important to note, as was evident in this analysis, that inducing a more complex network structure to model the data does not always improve model accuracy. 
 
-A figure:
 
-\begin{figure}[H]
-\includegraphics{unsw-logo.png}
-\caption{A caption}\label{myfigure}
-\end{figure}
-
-In the text, see Figure \ref{myfigure}.
-
----
-# References
----
 
 \bibliographystyle{elsarticle-num}
 \bibliography{references}
