@@ -150,7 +150,7 @@ Based on the model, the forecast temperature is an important factor for forecast
 
 \bigskip
 
-Suppose the actual demand information available weekly is on Sunday midday, and the requirement is to provide a forecast of demand for the following week. With the forecast of temperature for that week, the input data will be built with the appropriate timeslot related input, temperature, with the actual demand filed set to zero.
+Suppose the actual demand information available weekly is on Sunday midday, and the requirement is to provide a forecast of demand for the following week. With the forecast of temperature for that week, the input data will be built with the appropriate timeslot related input, temperature, with the actual demand field set to zero.
 
 \bigskip
 
@@ -325,17 +325,12 @@ The bi-directional Long short-term memory (LSTM) model performs well when predic
 
 Add you codes here.
 
-## **Tables** {-}
+## **Model Results** {-}
 
-If you have tables, you can add them here.
-
-Use https://www.tablesgenerator.com/markdown_tables to crete very simple markdown tables, otherwise use \LaTeX.
-
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+\begin{figure}[H]
+\includegraphics{snapshots1/LSTM Test Result 1.png}
+\caption{LSTM Model Test Result}\label{ModelResult}
+\end{figure}
 
 
 
