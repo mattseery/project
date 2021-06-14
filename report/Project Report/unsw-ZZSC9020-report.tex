@@ -106,7 +106,13 @@ rules, policies and pricing that are invoked on the energy sector.
 Additionally, the businesses operating in this sector can use this
 information to guide their decision-making regarding electricity
 generation and distribution, as well as for the purpose of price
-benchmarking.
+benchmarking.A bidirectional single LSTM neural network with 50 neurons
+with `relu' as activation function with Adam as the optimiser was
+developed. The month, hour, weekday/weekend as categorical data with
+public holiday as additional input and scaled values of temperature and
+actual demand are used with lookback timeslots of 24 x 30 minutes. This
+model was able to produce a RMSE of about 70MW per time slot which
+improves on the current model that operates with a RMSE of about 85MW.
 
 %\afterpage{\blankpage}
 
@@ -402,7 +408,7 @@ timestamp.
 
 \bigskip
 
-With these limitations, the assumption is that it the given data is
+With these limitations, the assumption is that the given data is
 sufficient to predict the forecast demand within a range 5-10\% of the
 actual demand.
 
@@ -665,12 +671,30 @@ more time to train but further improved the result.
 
 \bigskip
 
-The final model was produced with a 50 node bidirectional single LSTM
-with `Relu' as activation function. This was trained with data from
-2018-2020 with 30 epochs, a batch size of 32 and a lookback of 24
-timestamps. Furthermore, a validation split of 10\% and test set of 2021
-produced an excellent result, with an RMSE less than 70MW (66.55MW) on
-test data as well as an average percentage difference of 0.66\%.
+The final model consists of a 50-node bidirectional single LSTM with
+`relu' set as the activation function. This was trained with all the
+data from 2018 to 2020 using 30 epochs, a batch size of 32, and a
+lookback of 24 slots with a 10\% split for the validation set. The test
+dataset for 2021 produced excellent results with a RMSE less than 70MW
+(66.55MW) and produced on average a percentage difference of 0.66\% to
+the actual demand for this period. Note that the test data uses the
+actual demand values 30 minutes prior to the prediction.
+
+\bigskip
+
+When there is no actual demand data available, and the demand to be
+predicted is one day ahead or one week ahead, there is no choice but to
+use the forecasted demand to forecast the rest of the demand as
+described in Prediction Algorithm. The issue with this approach is that
+the error could built up cumulatively. This can be seen in the data
+visualisation for the forecasted graph in January 2021.
+
+\bigskip
+
+The model will work the best, if the prior actual demand can be provided
+as close to the predicted time slot. Ideal frequency would be an hourly
+update of this data so that the short-term demand can be predicted for
+30-minute slots.
 
 \hypertarget{discussion}{%
 \chapter{Discussion}\label{discussion}}
@@ -766,33 +790,23 @@ data does not always improve model accuracy.
 \addcontentsline{toc}{section}{\textbf{Codes}}
 
 \begin{figure}[H]
-\includegraphics{snapshots1/LSTM_Build_Model_1.png}
+\includegraphics{snapshots1/new LSTM_Build_Model_1.png}
 \caption{LSTM Model Build 1}\label{ModelBuild1}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots1/LSTM_Build_Model_2.png}
+\includegraphics{snapshots1/new LSTM_Build_Model_2.png}
 \caption{LSTM Model Build 2}\label{ModelBuild2}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots1/LSTM_Build_Model_3.png}
+\includegraphics{snapshots1/new LSTM_Build_Model_3.png}
 \caption{LSTM Model Build 3}\label{ModelBuild3}
 \end{figure}
 
 \begin{figure}[H]
-\includegraphics{snapshots1/LSTM_Build_Model_4.png}
+\includegraphics{snapshots1/new LSTM_Build_Model_4.png}
 \caption{LSTM Model Build 4}\label{ModelBuild4}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics{snapshots1/LSTM_Build_Model_5.png}
-\caption{LSTM Model Build 5}\label{ModelBuild5}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics{snapshots1/LSTM_Build_Model_6.png}
-\caption{LSTM Model Build 6}\label{ModelBuild6}
 \end{figure}
 
 \begin{figure}[H]
